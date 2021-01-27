@@ -2,7 +2,7 @@
   <header>
     <section>
       <h2>Cartilla</h2>
-      <ion-searchbar animated></ion-searchbar>
+      <ion-searchbar animated [(ngModel)]="search" (keyup)="filter()"></ion-searchbar>
     </section>
   </header>
   <section *ngFor="let platillo of platillos" tappable (click)="detail(platillo)">

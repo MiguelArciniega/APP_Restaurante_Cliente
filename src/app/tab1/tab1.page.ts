@@ -9,6 +9,8 @@ import { Router, NavigationExtras } from '@angular/router';
 export class Tab1Page {
 
   public platillos = [];
+  public platillos_2 = [];
+  search: string;
 
   constructor(private router: Router) {
 
@@ -37,6 +39,11 @@ export class Tab1Page {
       image: 'https://cdn.kiwilimon.com/recetaimagen/28577/thumb400x300-29028.jpg',
       price: 89.99
     });
+    this.platillos_2 = this.platillos;
+  }
+
+  getAll(): void {
+    this.platillos = this.platillos_2;
   }
 
   detail(platillo: []) {
@@ -46,5 +53,14 @@ export class Tab1Page {
       }
     };
     this.router.navigate(['/detail'], navext);
+  }
+
+  filter(): void {
+    this.getAll();
+    if (this.search && this.search.trim()) {
+      this.platillos = this.platillos.filter((platillo) => {
+        return (platillo.name.toLocaleLowerCase().indexOf(this.search.toLocaleLowerCase()) > -1);
+      });
+    }
   }
 }
