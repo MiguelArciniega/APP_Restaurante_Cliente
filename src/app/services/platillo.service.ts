@@ -8,25 +8,38 @@ import { Platillo } from '../models/platillo';
 export class PlatilloService {
 
   public name: string[];
+  public cantidad: number[];
   public platillos: Platillo[];
 
   constructor() {
     this.name = [];
+    this.cantidad = [];
     this.platillos = [{
-      name: "",
-      image: "",
+      name: '',
+      image: '',
       price: 0
     }];
   }
 
-  addPlatillo(platillo: Platillo) {
+  addPlatillo(platillo: Platillo, cantidad: number) {
+    this.cantidad.push(cantidad);
     this.name.push(platillo.name);
     this.platillos.push({
       name: platillo.name,
       image: platillo.image,
       price: platillo.price
     });
+    console.log(this.cantidad);
     console.log(this.name);
+    console.log(this.platillos);
+  }
+
+  deletePlatillo(platillo: Platillo) {
+    this.platillos.forEach(e => {
+      if (e.name == platillo.name) {
+        this.platillos.splice(this.platillos.indexOf(e), 1);
+      }
+    });
     console.log(this.platillos);
   }
 }

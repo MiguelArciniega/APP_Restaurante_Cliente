@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Pedido } from '../models/pedido';
 import { PedidosService } from '../services/pedidos.service';
 import { Platillo } from '../models/platillo';
-import { PlatilloService } from "../services/platillo.service";
+import { PlatilloService } from '../services/platillo.service';
 
 @Component({
   selector: 'app-tab2',
@@ -35,7 +35,7 @@ export class Tab2Page {
     this.pedido = {
       mesa: this.myForm.controls.mesa.value,
       pedidos: this.platillosService.name,
-      cantidad: [1, 2, 3, 4, 5],
+      cantidad: this.platillosService.cantidad,
       sugerencias: this.myForm.controls.sugerencias.value,
       active: true
     };
@@ -51,4 +51,13 @@ export class Tab2Page {
     });
   }
 
+  removePlatillo(platillo: Platillo): void {
+    this.platillosService.deletePlatillo(platillo);
+    this.platillos.forEach(e => {
+      if (e.name == platillo.name) {
+        this.platillos.splice(this.platillos.indexOf(e), 1);
+      }
+    });
+    console.log(this.platillos);
+  }
 }
