@@ -1,9 +1,11 @@
 <ion-content color="primary" padding>
   <header>
-    <section>
-      <h2>Cartilla</h2>
-      <ion-searchbar animated [(ngModel)]="search" (keyup)="filter()"></ion-searchbar>
-    </section>
+    <nav>
+      <div>
+        <h1>Cartilla</h1>
+      </div>
+    </nav>
+    <ion-searchbar animated [(ngModel)]="search" (keyup)="filter()"></ion-searchbar>
   </header>
   <section *ngFor="let platillo of platillos" tappable (click)="detail(platillo)">
     <ion-grid>
