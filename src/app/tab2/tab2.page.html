@@ -1,3 +1,12 @@
+<ion-header [translucent]="true">
+  <ion-toolbar slot="start">
+    <ion-title>
+      Mi Orden
+    </ion-title>
+    <ion-back-button default="/"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content color="primary" padding>
   <header>
     <section>
@@ -8,13 +17,13 @@
     <form [formGroup]="myForm">
       <ion-card-header>
         <ion-item>
-          <ion-label position="floating">Mesa:</ion-label>
-          <ion-input formControlName="mesa" type="number"></ion-input>
+          <ion-label position="floating">Mesa</ion-label>
+          <ion-input formControlName="mesa" type="text"></ion-input>
         </ion-item>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item-sliding *ngFor="let platillo of platillos">
+          <ion-item-sliding *ngFor="let platillo of platillos; let cantidad of platillos;">
             <ion-item>
               <ion-label>
                 <section class="flex">
@@ -32,11 +41,52 @@
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
-        <section id="text-inp">
-          <ion-label position="Floating">Sugerencias:</ion-label>
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-label>
+                  <section class="flex2">
+                    <h2><strong>Subtotal</strong></h2>
+                    <ion-chip color="success" class="ion-float-right">
+                      <ion-label>${{total}}</ion-label>
+                    </ion-chip>
+                  </section>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label>
+                  <section class="flex2">
+                    <h2><strong>IVA</strong></h2>
+                    <ion-chip color="success" class="ion-float-right">
+                      <ion-label>${{total*0.16}}</ion-label>
+                    </ion-chip>
+                  </section>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label>
+                  <section class="flex2">
+                    <h2><strong>Total</strong></h2>
+                    <ion-chip color="success" class="ion-float-right">
+                      <ion-label>${{total+total*0.16}}</ion-label>
+                    </ion-chip>
+                  </section>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item id="text-inp">
+          <ion-label position="floating">Sugerencias</ion-label>
           <ion-input formControlName="sugerencias" type="text"></ion-input>
-        </section>
-        <ion-button size="large" type="button" [disabled]="!myForm.valid" expand="block" (click)="create()">Enviar Orden
+        </ion-item>
+        <ion-button size="large" type="button" [disabled]="!myForm.valid" expand="block" (click)="create()">Enviar
+          Orden
         </ion-button>
       </ion-card-content>
     </form>
@@ -45,7 +95,11 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <h1>Aún no has agregado ningún platillo</h1>
+          <ion-card>
+            <ion-card-header>
+              <h1>Aún no has agregado ningún platillo</h1>
+            </ion-card-header>
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>

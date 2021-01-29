@@ -8,6 +8,8 @@ import { Pedido } from '../models/pedido';
 })
 export class PedidosService {
 
+  public total = 0;
+
   constructor(private firestore: AngularFirestore) { }
 
   createPedido(pedido: Pedido) {

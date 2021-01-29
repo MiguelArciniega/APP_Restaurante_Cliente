@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Platillo } from '../models/platillo';
 
@@ -11,7 +12,7 @@ export class PlatilloService {
   public cantidad: number[];
   public platillos: Platillo[];
 
-  constructor() {
+  constructor(private firestore: AngularFirestore) {
     this.name = [];
     this.cantidad = [];
     this.platillos = [{
@@ -19,6 +20,10 @@ export class PlatilloService {
       image: '',
       price: 0
     }];
+  }
+
+  getPlatillo() {
+    return this.firestore.collection('platillos').snapshotChanges();
   }
 
   addPlatillo(platillo: Platillo, cantidad: number) {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Platillo } from '../models/platillo';
 import { PlatilloService } from '../services/platillo.service';
+import { PedidosService } from "../services/pedidos.service";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -13,8 +14,9 @@ export class DetailPage implements OnInit {
 
   public platillo: Platillo;
   public myForm: FormGroup;
+  public total = 0;
 
-  constructor(private actroute: ActivatedRoute, private platillosService: PlatilloService, private fb: FormBuilder) {
+  constructor(private actroute: ActivatedRoute, private platillosService: PlatilloService, private fb: FormBuilder, private pedidosService: PedidosService) {
     this.actroute.queryParams.subscribe(
       params => {
         if (params && params.special) {
@@ -33,6 +35,7 @@ export class DetailPage implements OnInit {
   create() {
     this.platillosService.addPlatillo(this.platillo, this.myForm.controls.cantidad.value);
     this.cleanInputs();
+    this.pedidosService.total += this.platillo.price;
     alert('Pedido agregado con exito');
   }
 

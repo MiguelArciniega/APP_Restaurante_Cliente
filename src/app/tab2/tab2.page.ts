@@ -15,9 +15,11 @@ export class Tab2Page {
   platillos: Platillo[];
   public pedido: Pedido;
   public myForm: FormGroup;
+  public total = 0;
 
   constructor(private pedidosService: PedidosService, private platillosService: PlatilloService, private fb: FormBuilder) {
     this.platillos = platillosService.platillos.slice(1);
+    this.total = pedidosService.total;
   }
 
   ngOnInit() {
@@ -46,8 +48,8 @@ export class Tab2Page {
 
   private cleanInputs(): void {
     this.myForm = this.fb.group({
-      mesa: [0, Validators.compose([Validators.required, Validators.pattern(/^-?([1-9]\d*)?$/)])],
-      sugerencias: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(150)])]
+      mesa: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])],
+      sugerencias: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(150)])]
     });
   }
 
@@ -58,6 +60,12 @@ export class Tab2Page {
         this.platillos.splice(this.platillos.indexOf(e), 1);
       }
     });
+    this.removeFromTotal(platillo);
     console.log(this.platillos);
+  }
+
+  removeFromTotal(platillo: Platillo) {
+    this.total -= platillo.price;
+    this.pedidosService.total -= platillo.price;
   }
 }
